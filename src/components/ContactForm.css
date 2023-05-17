@@ -1,0 +1,31 @@
+.form__heading {
+    text-align: center;
+}
+
+.form__container {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.contact__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact__form label {
+    margin-bottom: 0.5rem;
+}
+
+.contact__form input, .contact__form textarea {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.submit__button {
+    padding: 0.5rem;
+}
+
