@@ -9,6 +9,13 @@ export default function ContactForm() {
     const [message, setMessage] = useState("");
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [isPreview, setIsPreview] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+
+    const handlePreview = (e) => {
+        e.preventDefault();
+        setIsPreview(true);
+      };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,8 +33,10 @@ export default function ContactForm() {
             if(res.status === 200) {
                 console.log("Form Submitted Successfully");
                 setShowSuccessMessage(true);
+                setIsVisible(true);
+
                 setTimeout(() => {
-                    setShowSuccessMessage(false);
+                    // setShowSuccessMessage(false);
                     setName('');
                     setEmail('');
                     setPhone('');
@@ -37,18 +46,74 @@ export default function ContactForm() {
             } else {
                 console.log("Failed: Try Again");
                 setShowErrorMessage(true);
-                setTimeout(() => {
-                    setShowErrorMessage(false);
-                  }, 3000);
+                setIsVisible(true);
+
+                // setTimeout(() => {
+                //     setShowErrorMessage(false);
+                //   }, 3000);
             }
         })
         
     }
+    const handleEdit = () => {
+        setIsPreview(false);
+    };
 
   return (
-    <div className="form__container">
+    <div>
+        {isVisible ? (
+            <div>
+          {showSuccessMessage && (
+            <div style={{ color: 'green',
+            textAlign: "center",
+            boxShadow: "0 0 4px 4px green",
+            maxWidth: "300px",
+            margin: "0 auto",
+            marginTop: "5rem",
+            borderRadius: "4px",
+            lineHeight: "1.5"}}>Form submitted successfully</div>
+          )}
+          {showErrorMessage && (
+            <div style={{ color: 'red',
+            textAlign: "center",
+            maxWidth: "300px",
+            margin: "0 auto",
+            marginTop: "5rem",
+            lineHeight: "1.5"}}>Failed, please try again</div>
+          )}
+        </div>
+        ) : (
+            <div>
+            {isPreview ? (
+        <div className="preview__container">
+          <h3 className="preview__title">Preview</h3>
+          <p>
+            <strong>Name:</strong> {name}
+          </p>
+          <p>
+            <strong>Email:</strong> {email}
+          </p>
+          <p>
+            <strong>Phone:</strong> {phone}
+          </p>
+          <p>
+            <strong>Message:</strong> {message}
+          </p>
+          <div className="preview__buttons">
+            <button className="edit__button" onClick={handleEdit}>Edit</button>
+            <button className="submit__button" onClick={handleSubmit}>Submit</button>
+          </div>
+
+            {showSuccessMessage && 
+            <div style={{ color: 'green' }}>Form submitted successfully</div> }
+
+            {showErrorMessage && 
+            <div style={{ color: 'red' }}>Failed, please try again</div> }
+        </div>
+        ) : (
+            <div className="form__container">
         <h1 className="form__heading">Contact Us</h1>
-        <form className="contact__form" onSubmit={handleSubmit}>
+        <form className="contact__form" onSubmit={handlePreview}>
             <label htmlFor="name">Name</label>
             <input 
                 type="text" 
@@ -85,13 +150,12 @@ export default function ContactForm() {
                 onChange={(e) => setMessage(e.target.value)}
                  />
             
-            <button type="submit" className="submit__button">Submit</button>
+            <button type="submit" className="preview__btn">Preview</button>
         </form>
-        {showSuccessMessage && 
-        <div style={{ color: 'green' }}>Form submitted successfully</div> }
-
-        {showErrorMessage && 
-        <div style={{ color: 'red' }}>Failed, please try again</div> }
+    </div>
+        ) }
+            </div>
+        ) }
     </div>
   )
 }
