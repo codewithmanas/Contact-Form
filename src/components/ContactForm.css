@@ -25,7 +25,35 @@
     border: 1px solid #ccc;
 }
 
-.submit__button {
+.preview__btn {
+    padding: 0.5rem;
+}
+
+
+/* Preview */
+.preview__container {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.preview__title {
+    text-align: center;
+
+}
+
+.preview__container p {
+    padding: 4px;
+}
+
+.preview__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.edit__button, .submit__button {
     padding: 0.5rem;
 }
 
